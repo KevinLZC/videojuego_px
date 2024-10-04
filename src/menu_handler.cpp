@@ -1,10 +1,9 @@
-#include "menu_handler.h"
 #include <Arduino.h>
-
-extern JSON json;
+#include "menu_handler.h"
 
 void MenuHandler::setup()
 {
+  Serial.begin(115200);
   display.lcd_init_display();
   pinMode(PIN_BUTTON, INPUT_PULLUP);
   display.showWelcomeScreen();
@@ -100,7 +99,7 @@ void inGameHandler(bool buttonPressed, unsigned long gameStartTime)
     display.showInGameMenu(inGameMenuIndex);
   }
 
-  if (millis() - gameStartTime > 5000)
+  if (millis() - gameStartTime > 15000)
   {
     currentState = GAME_OVER;
     gameOverMenuIndex = 0;

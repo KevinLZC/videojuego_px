@@ -1,12 +1,10 @@
 #ifndef LCD_HANDLER_H
 #define LCD_HANDLER_H
 
-#include <Arduino.h>
-#include "microsd.h"
-#include "json.h"
-
-#include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
+#include "microsd.h"
+
+extern MicroSD microSD;
 
 #define VALOR_INICIAL 2048
 #define VALOR_TOPE 4095

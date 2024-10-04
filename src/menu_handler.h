@@ -2,12 +2,8 @@
 #define MENU_HANDLER_H
 
 #include "lcd_handler.h"
-#include "microsd.h"
 
-// Declaraciones externas
-extern LCDHandler display; // No necesita instancia aquí
-extern MicroSD microSD;    // Declaración externa de MicroSD
-extern JSON json;          // Declaración externa de JSON
+extern LCDHandler display;
 
 class MenuHandler
 {

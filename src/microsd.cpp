@@ -1,4 +1,7 @@
 #include "microsd.h"
+#include "json.h"
+
+JSON json;
 
 void MicroSD::init()
 {
@@ -12,8 +15,10 @@ void MicroSD::init()
   }
 }
 
-void MicroSD::saveScore(const String &jsonData)
+void MicroSD::saveScore(int score)
 {
+  String jsonData = json.createScoreJson(score);
+
   File file = SD.open(filename, FILE_APPEND);
   if (file)
   {

@@ -1,10 +1,5 @@
 #include "lcd_handler.h"
 #include <Arduino.h>
-#include "microsd.h"
-#include "json.h"
-
-MicroSD microSD;
-JSON json;
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
@@ -149,7 +144,7 @@ void LCDHandler::showInGameMenu(int index)
 
 void LCDHandler::showGameOverMenu(int index)
 {
-  microSD.saveScore(json.createScoreJson(score));
+  microSD.saveScore(score);
   lcd_clear_display();
   for (int i = 0; i < gameOverMenuItems; i++)
   {
