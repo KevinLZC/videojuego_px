@@ -16,7 +16,7 @@ private:
 public:
   void setup();
   bool isButtonPressed();
-  void handleMenuNavigation();
+  void handleMenuNavigation(bool);
 };
 
 #endif

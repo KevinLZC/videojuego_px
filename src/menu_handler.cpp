@@ -37,6 +37,7 @@ void mainMenuHandler(int yValue, bool joystickMoved, bool buttonPressed, unsigne
 {
   if (DECREMENTO(yValue) && !joystickMoved)
   {
+    //funcion para sonido
     mainMenuIndex++;
     if (mainMenuIndex >= mainMenuItems)
       mainMenuIndex = 0;
@@ -90,8 +91,9 @@ void highScoresHandler(bool buttonPressed)
   }
 }
 
-void inGameHandler(bool buttonPressed, unsigned long gameStartTime)
+void inGameHandler(bool buttonPressed, unsigned long gameStartTime, bool startGameFlag)
 {
+  
   if (buttonPressed)
   {
     currentState = IN_GAME_MENU;
@@ -99,12 +101,15 @@ void inGameHandler(bool buttonPressed, unsigned long gameStartTime)
     display.showInGameMenu(inGameMenuIndex);
   }
 
-  if (millis() - gameStartTime > 15000)
-  {
-    currentState = GAME_OVER;
-    gameOverMenuIndex = 0;
-    display.showGameOverMenu(gameOverMenuIndex);
-  }
+  startGameFlag = true;
+  
+  // if (millis() - gameStartTime > 15000)
+  // {
+  //   gameStartTime = millis();
+  //   currentState = GAME_OVER;
+  //   gameOverMenuIndex = 0;
+  //   display.showGameOverMenu(gameOverMenuIndex);
+  // }
 }
 
 void inGameMenuHandler(int yValue, bool joystickMoved, bool buttonPressed, unsigned long gameStartTime)
@@ -189,7 +194,7 @@ void gameOverHandler(int yValue, bool joystickMoved, bool buttonPressed, unsigne
   }
 }
 
-void MenuHandler::handleMenuNavigation()
+void MenuHandler::handleMenuNavigation(bool startGameFlag)
 {
   int yValue = analogRead(PIN_Y);
   bool joystickMoved = false;
@@ -209,7 +214,7 @@ void MenuHandler::handleMenuNavigation()
     break;
 
   case IN_GAME:
-    inGameHandler(buttonPressed, gameStartTime);
+    inGameHandler(buttonPressed, gameStartTime, startGameFlag);
     break;
 
   case IN_GAME_MENU:
