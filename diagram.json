@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "author": "Kevin Lázaro Cernas",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": -91.16, "attrs": {} },
+    {
+      "type": "wokwi-lcd1602",
+      "id": "lcd1",
+      "top": -51.2,
+      "left": 53.6,
+      "attrs": { "pins": "i2c" }
+    },
+    {
+      "type": "wokwi-analog-joystick",
+      "id": "joystick1",
+      "top": -183,
+      "left": -61.8,
+      "attrs": {}
+    },
+    { "type": "wokwi-microsd-card", "id": "sd1", "top": 240.23, "left": -76.73, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "lcd1:VCC", "esp:5V", "red", [ "h-172.8", "v211.3" ] ],
+    [ "lcd1:GND", "esp:GND.2", "black", [ "h0" ] ],
+    [ "lcd1:SDA", "esp:21", "orange", [ "h-19.2", "v77" ] ],
+    [ "lcd1:SCL", "esp:22", "green", [ "h-38.4", "v38.7" ] ],
+    [ "joystick1:GND", "esp:GND.2", "black", [ "v0" ] ],
+    [ "joystick1:VCC", "esp:5V", "red", [ "h-96", "v268.8" ] ],
+    [ "joystick1:VERT", "esp:35", "purple", [ "v0" ] ],
+    [ "joystick1:HORZ", "esp:34", "white", [ "v0" ] ],
+    [ "joystick1:SEL", "esp:32", "blue", [ "v0" ] ],
+    [ "sd1:GND", "esp:GND.2", "black", [ "h48", "v-239.89" ] ],
+    [ "sd1:VCC", "esp:5V", "red", [ "h19.2", "v-57.46", "h-105.75" ] ],
+    [ "esp:23", "sd1:DI", "green", [ "h19.2", "v259.29" ] ],
+    [ "sd1:DO", "esp:19", "green", [ "h38.4", "v-163.09" ] ],
+    [ "sd1:SCK", "esp:18", "green", [ "h19.2", "v-172.81" ] ],
+    [ "sd1:CS", "esp:5", "green", [ "h57.6", "v-191.94" ] ]
+  ],
+  "dependencies": {}
+}
