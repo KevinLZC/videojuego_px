@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include "menu_handler.h"
+#include "song.h"
 
+soundtracks my_soundtrack;
 void MenuHandler::setup()
 {
   Serial.begin(115200);
@@ -8,6 +10,7 @@ void MenuHandler::setup()
   pinMode(PIN_BUTTON, INPUT_PULLUP);
   display.showWelcomeScreen();
   microSD.init();
+  my_soundtrack.fur_elise();
 }
 
 bool MenuHandler::isButtonPressed()
@@ -37,7 +40,8 @@ void mainMenuHandler(int yValue, bool joystickMoved, bool buttonPressed, unsigne
 {
   if (DECREMENTO(yValue) && !joystickMoved)
   {
-    //funcion para sonido
+    //Función para sonido
+    my_soundtrack.move();
     mainMenuIndex++;
     if (mainMenuIndex >= mainMenuItems)
       mainMenuIndex = 0;
@@ -47,6 +51,8 @@ void mainMenuHandler(int yValue, bool joystickMoved, bool buttonPressed, unsigne
 
   if (INCREMENTO(yValue) && !joystickMoved)
   {
+    //Función para sonido
+    my_soundtrack.move();
     mainMenuIndex--;
     if (mainMenuIndex < 0)
       mainMenuIndex = mainMenuItems - 1;
@@ -116,6 +122,8 @@ void inGameMenuHandler(int yValue, bool joystickMoved, bool buttonPressed, unsig
 {
   if (DECREMENTO(yValue) && !joystickMoved)
   {
+    //Función para sonido
+    my_soundtrack.move();
     inGameMenuIndex++;
     if (inGameMenuIndex >= inGameMenuItems)
       inGameMenuIndex = 0;
@@ -125,6 +133,8 @@ void inGameMenuHandler(int yValue, bool joystickMoved, bool buttonPressed, unsig
 
   if (INCREMENTO(yValue) && !joystickMoved)
   {
+    //Función para sonido
+    my_soundtrack.move();
     inGameMenuIndex--;
     if (inGameMenuIndex < 0)
       inGameMenuIndex = inGameMenuItems - 1;
@@ -157,6 +167,8 @@ void gameOverHandler(int yValue, bool joystickMoved, bool buttonPressed, unsigne
 {
   if (DECREMENTO(yValue) && !joystickMoved)
   {
+    //Función para sonido
+    my_soundtrack.move();
     gameOverMenuIndex++;
     if (gameOverMenuIndex >= gameOverMenuItems)
       gameOverMenuIndex = 0;
@@ -166,6 +178,8 @@ void gameOverHandler(int yValue, bool joystickMoved, bool buttonPressed, unsigne
 
   if (INCREMENTO(yValue) && !joystickMoved)
   {
+    //Función para sonido
+    my_soundtrack.move();
     gameOverMenuIndex--;
     if (gameOverMenuIndex < 0)
       gameOverMenuIndex = gameOverMenuItems - 1;

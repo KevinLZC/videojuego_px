@@ -1,4 +1,7 @@
 #include "juego.h"
+#include "song.h"
+
+soundtracks my_soundtrack;
 
 void Juego :: movimiento()
 {
@@ -78,6 +81,7 @@ bool Juego :: hasCrashed(){
   {
     returnVal = true;
     Serial.print("choco");
+    my_soundtrack.death_sound();
   }
 
   return returnVal;
