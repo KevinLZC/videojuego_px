@@ -45,7 +45,11 @@ public:
    * Este método se encarga de actualizar el estado del menú
    * basado en el estado actual de sistema.
    */
+<<<<<<< HEAD
   void handleMenuNavigation();
+=======
+  void handleMenuNavigation(bool startGame);
+>>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
 };
 
 #endif

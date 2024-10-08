@@ -1,8 +1,10 @@
 #include <Arduino.h>
 #include "menu_handler.h"
-#include "song.h"
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
 // Nombre del jugador, limitado a 3 caracteres
 char playerName[3] = "";
 // Índice de la letra que el jugador está seleccionando
@@ -15,7 +17,10 @@ int currentLetterIndex = 0;
  * y el pin del botón. También muestra la pantalla de bienvenida
  * y realiza la inicialización de la tarjeta microSD.
  */
+<<<<<<< HEAD
 soundtracks my_soundtrack;
+=======
+>>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
 void MenuHandler::setup()
 {
   Serial.begin(115200);
@@ -23,7 +28,7 @@ void MenuHandler::setup()
   pinMode(PIN_BUTTON, INPUT_PULLUP);
   display.showWelcomeScreen();
   microSD.init();
-  my_soundtrack.fur_elise();
+  // my_soundtrack.fur_elise();
 }
 
 /**
@@ -78,8 +83,8 @@ void mainMenuHandler(int yValue, bool joystickMoved, bool buttonPressed, unsigne
 {
   if (DECREMENTO(yValue) && !joystickMoved)
   {
-    //Función para sonido
-    my_soundtrack.move();
+    // Función para sonido
+    // my_soundtrack.move();
     mainMenuIndex++;
     if (mainMenuIndex >= mainMenuItems)
       mainMenuIndex = 0;
@@ -89,8 +94,8 @@ void mainMenuHandler(int yValue, bool joystickMoved, bool buttonPressed, unsigne
 
   if (INCREMENTO(yValue) && !joystickMoved)
   {
-    //Función para sonido
-    my_soundtrack.move();
+    // Función para sonido
+    // my_soundtrack.move();
     mainMenuIndex--;
     if (mainMenuIndex < 0)
       mainMenuIndex = mainMenuItems - 1;
@@ -150,9 +155,12 @@ void highScoresHandler(bool buttonPressed)
  * Cambia al estado de IN_GAME_MENU si se presiona el botón,
  * y controla el tiempo de juego para transitar a ENTER_NAME.
  */
+<<<<<<< HEAD
 void inGameHandler(bool buttonPressed, unsigned long gameStartTime)
+=======
+void inGameHandler(bool buttonPressed, unsigned long gameStartTime, bool startGameFlag)
+>>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
 {
-  
   if (buttonPressed)
   {
     currentState = IN_GAME_MENU;
@@ -160,6 +168,7 @@ void inGameHandler(bool buttonPressed, unsigned long gameStartTime)
     display.showInGameMenu(inGameMenuIndex);
   }
 
+<<<<<<< HEAD
   
   // if (millis() - gameStartTime > 15000)
   // {
@@ -168,6 +177,18 @@ void inGameHandler(bool buttonPressed, unsigned long gameStartTime)
   //   gameOverMenuIndex = 0;
   //   display.showGameOverMenu(gameOverMenuIndex);
   // }
+=======
+  startGameFlag = true;
+
+  // Suponiendo que el juego termina después de 15 segundos
+  if (millis() - gameStartTime > 15000)
+  {
+    // Antes de ir a GAME_OVER, se activa el ingreso del nombre
+    currentState = ENTER_NAME;
+    currentLetterIndex = 0;                // Reiniciamos el índice de letras
+    display.displayPlayerName(playerName); // Mostramos el nombre inicial
+  }
+>>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
 }
 
 /**
@@ -183,8 +204,8 @@ void inGameMenuHandler(int yValue, bool joystickMoved, bool buttonPressed, unsig
 {
   if (DECREMENTO(yValue) && !joystickMoved)
   {
-    //Función para sonido
-    my_soundtrack.move();
+    // Función para sonido
+    // my_soundtrack.move();
     inGameMenuIndex++;
     if (inGameMenuIndex >= inGameMenuItems)
       inGameMenuIndex = 0;
@@ -194,8 +215,8 @@ void inGameMenuHandler(int yValue, bool joystickMoved, bool buttonPressed, unsig
 
   if (INCREMENTO(yValue) && !joystickMoved)
   {
-    //Función para sonido
-    my_soundtrack.move();
+    // Función para sonido
+    // my_soundtrack.move();
     inGameMenuIndex--;
     if (inGameMenuIndex < 0)
       inGameMenuIndex = inGameMenuItems - 1;
@@ -238,8 +259,8 @@ void gameOverHandler(int yValue, bool joystickMoved, bool buttonPressed, unsigne
 {
   if (DECREMENTO(yValue) && !joystickMoved)
   {
-    //Función para sonido
-    my_soundtrack.move();
+    // Función para sonido
+    // my_soundtrack.move();
     gameOverMenuIndex++;
     if (gameOverMenuIndex >= gameOverMenuItems)
       gameOverMenuIndex = 0;
@@ -249,8 +270,8 @@ void gameOverHandler(int yValue, bool joystickMoved, bool buttonPressed, unsigne
 
   if (INCREMENTO(yValue) && !joystickMoved)
   {
-    //Función para sonido
-    my_soundtrack.move();
+    // Función para sonido
+    // my_soundtrack.move();
     gameOverMenuIndex--;
     if (gameOverMenuIndex < 0)
       gameOverMenuIndex = gameOverMenuItems - 1;
@@ -289,6 +310,7 @@ void gameOverHandler(int yValue, bool joystickMoved, bool buttonPressed, unsigne
  * transición al estado GAME_OVER cuando se ingresa el nombre completo.
  */
 void enterNameHandler(int yValue, bool &joystickMoved, bool buttonPressed)
+<<<<<<< HEAD
 {
   // Cambiar la letra actual en función del movimiento del joystick
   if (DECREMENTO(yValue) && !joystickMoved)
@@ -373,6 +395,90 @@ void enterNameHandler(int yValue, bool &joystickMoved, bool buttonPressed)
 
 void MenuHandler::handleMenuNavigation()
 {
+=======
+{
+  // Cambiar la letra actual en función del movimiento del joystick
+  if (DECREMENTO(yValue) && !joystickMoved)
+  {
+    playerName[currentLetterIndex]++;
+    if (playerName[currentLetterIndex] > 'Z')
+      playerName[currentLetterIndex] = 'A';
+    joystickMoved = true;
+  }
+  else if (INCREMENTO(yValue) && !joystickMoved)
+  {
+    playerName[currentLetterIndex]--;
+    if (playerName[currentLetterIndex] < 'A')
+      playerName[currentLetterIndex] = 'Z';
+    joystickMoved = true;
+  }
+
+  // Si el joystick no se mueve, reseteamos el flag
+  if (!INCREMENTO(yValue) && !DECREMENTO(yValue))
+  {
+    joystickMoved = false;
+  }
+
+  // Cambiar al siguiente carácter cuando se presiona el botón
+  if (buttonPressed)
+  {
+    currentLetterIndex++;
+    if (currentLetterIndex > 2)
+    {
+      // Cuando se ha ingresado todo el nombre, pasar al estado GAME_OVER
+      currentState = GAME_OVER;
+      gameOverMenuIndex = 0;
+      display.lcd_clear_display(); // Aseguramos que se limpie la pantalla
+
+      // Mostrar el menú de Game Over
+      display.saveValue(playerName, score);
+      display.showGameOverMenu(gameOverMenuIndex);
+    }
+    else
+    {
+      // Si no se ha ingresado todo el nombre, mostrar el nombre actualizado
+      display.displayPlayerName(playerName);
+    }
+  }
+  else
+  {
+    // Mientras no se presione el botón, mostrar el nombre actual en pantalla
+    display.displayPlayerName(playerName);
+  }
+}
+
+/**
+ * @brief Maneja la navegación del menú en el videojuego.
+ *
+ * Esta función se encarga de gestionar la lógica de navegación del menú en función del estado actual del juego.
+ * Se utilizan entradas del joystick y botones para navegar a través de diferentes estados del menú.
+ *
+ * @param startGameFlag Bandera que indica si se debe iniciar un nuevo juego.
+ *                      Esta variable puede ser modificada en la función según la lógica del menú.
+ *
+ * La función realiza lo siguiente:
+ * - Lee el valor analógico del eje Y del joystick.
+ * - Verifica si un botón ha sido presionado.
+ * - Dependiendo del estado actual del menú (`currentState`), llama a la función de manejo correspondiente para ese estado.
+ *
+ * Los estados posibles son:
+ * - WELCOME: Muestra la pantalla de bienvenida.
+ * - MAIN_MENU: Maneja la navegación en el menú principal del juego.
+ * - HIGH_SCORES: Muestra las puntuaciones más altas.
+ * - IN_GAME: Maneja la lógica durante el juego.
+ * - IN_GAME_MENU: Maneja la navegación en el menú del juego en curso.
+ * - GAME_OVER: Muestra la lógica cuando el juego ha terminado.
+ * - ENTER_NAME: Maneja la entrada del nombre del jugador.
+ *
+ * Ejemplo de uso:
+ * ```cpp
+ * MenuHandler menuHandler;
+ * menuHandler.handleMenuNavigation(startGameFlag);
+ * ```
+ */
+void MenuHandler::handleMenuNavigation(bool startGameFlag)
+{
+>>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
   int yValue = analogRead(PIN_Y);    // Lee el valor del eje Y del joystick
   bool joystickMoved = false;        // Bandera para indicar si el joystick se ha movido
   buttonPressed = isButtonPressed(); // Verifica si el botón ha sido presionado
@@ -393,7 +499,11 @@ void MenuHandler::handleMenuNavigation()
     break;
 
   case IN_GAME:
+<<<<<<< HEAD
     inGameHandler(buttonPressed, gameStartTime); // Maneja la lógica del juego
+=======
+    inGameHandler(buttonPressed, gameStartTime, startGameFlag); // Maneja la lógica del juego
+>>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
     break;
 
   case IN_GAME_MENU:
