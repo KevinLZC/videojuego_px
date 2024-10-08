@@ -20,74 +20,74 @@ void ParallelTask::menuTask(void *pvParameters)
 {
   menuHandler.setup();
 
-  bool startGame = false;
   while (true)
   {
-    menuHandler.handleMenuNavigation(startGame);
+  menuHandler.handleMenuNavigation();
 
-    if(startGame)
+    switch(currentState)
     {
-      xTaskCreatePinnedToCore (
-      obstacle1Task,            /* Función que controla la tarea. */
-      "obstacle1Mov",               /* Etiqueta de la tarea.          */
-      2500,                   /* Tamaño en memoria RAM.         */
-      NULL,                   /* Parametros de la tarea.        */
-      1,                      /* Prioridad de la tarea.         */
-      &HiloObstaculo1,                 /* Seguimiento de la tarea.       */
-      NUCLEO_PRINCIPAL        /* Número de núcleo.              */
-      );
-      xTaskCreatePinnedToCore (
-        obstacle2Task,            /* Función que controla la tarea. */
-        "obstacle2Mov",               /* Etiqueta de la tarea.          */
-        2500,                   /* Tamaño en memoria RAM.         */
-        NULL,                   /* Parametros de la tarea.        */
-        1,                      /* Prioridad de la tarea.         */
-        &HiloObstaculo2,                 /* Seguimiento de la tarea.       */
-        NUCLEO_PRINCIPAL        /* Número de núcleo.              */
-      );
+      case IN_GAME_MENU:
+        xTaskCreatePinnedToCore (
+          obstacle1Task,            /* Función que controla la tarea. */
+          "obstacle1Mov",               /* Etiqueta de la tarea.          */
+          2500,                   /* Tamaño en memoria RAM.         */
+          NULL,                   /* Parametros de la tarea.        */
+          2,                      /* Prioridad de la tarea.         */
+          &HiloObstaculo1,                 /* Seguimiento de la tarea.       */
+          NUCLEO_PRINCIPAL        /* Número de núcleo.              */
+        );
+        xTaskCreatePinnedToCore (
+          obstacle2Task,            /* Función que controla la tarea. */
+          "obstacle2Mov",               /* Etiqueta de la tarea.          */
+          2500,                   /* Tamaño en memoria RAM.         */
+          NULL,                   /* Parametros de la tarea.        */
+          2,                      /* Prioridad de la tarea.         */
+          &HiloObstaculo2,                 /* Seguimiento de la tarea.       */
+          NUCLEO_PRINCIPAL        /* Número de núcleo.              */
+        );
 
-      xTaskCreatePinnedToCore (
-        playerMov,            /* Función que controla la tarea. */
-        "playerMov",               /* Etiqueta de la tarea.          */
-        4000,                   /* Tamaño en memoria RAM.         */
-        NULL,                   /* Parametros de la tarea.        */
-        3,                      /* Prioridad de la tarea.         */
-        &HiloPlayerMov,                 /* Seguimiento de la tarea.       */
-        NUCLEO_PRINCIPAL        /* Número de núcleo.              */
-      );
+        xTaskCreatePinnedToCore (
+          playerMov,            /* Función que controla la tarea. */
+          "playerMov",               /* Etiqueta de la tarea.          */
+          4000,                   /* Tamaño en memoria RAM.         */
+          NULL,                   /* Parametros de la tarea.        */
+          3,                      /* Prioridad de la tarea.         */
+          &HiloPlayerMov,                 /* Seguimiento de la tarea.       */
+          NUCLEO_PRINCIPAL        /* Número de núcleo.              */
+        );
 
-      xTaskCreatePinnedToCore (
-        obstacle1Task,            /* Función que controla la tarea. */
-        "obstacle1Mov",               /* Etiqueta de la tarea.          */
-        2500,                   /* Tamaño en memoria RAM.         */
-        NULL,                   /* Parametros de la tarea.        */
-        1,                      /* Prioridad de la tarea.         */
-        &HiloObstaculo1,                 /* Seguimiento de la tarea.       */
-        NUCLEO_PRINCIPAL        /* Número de núcleo.              */
-      );
-      xTaskCreatePinnedToCore (
-        obstacle2Task,            /* Función que controla la tarea. */
-        "obstacle2Mov",               /* Etiqueta de la tarea.          */
-        2500,                   /* Tamaño en memoria RAM.         */
-        NULL,                   /* Parametros de la tarea.        */
-        1,                      /* Prioridad de la tarea.         */
-        &HiloObstaculo2,                 /* Seguimiento de la tarea.       */
-        NUCLEO_PRINCIPAL        /* Número de núcleo.              */
-      );
+        xTaskCreatePinnedToCore (
+          checkingPause,            /* Función que controla la tarea. */
+          "checkPause",               /* Etiqueta de la tarea.          */
+          1000,                   /* Tamaño en memoria RAM.         */
+          NULL,                   /* Parametros de la tarea.        */
+          1,                      /* Prioridad de la tarea.         */
+          &HiloPausa,                 /* Seguimiento de la tarea.       */
+          NUCLEO_SECUNDARIO        /* Número de núcleo.              */
+        );
 
-      xTaskCreatePinnedToCore (
-        playerMov,            /* Función que controla la tarea. */
-        "playerMov",               /* Etiqueta de la tarea.          */
-        4000,                   /* Tamaño en memoria RAM.         */
-        NULL,                   /* Parametros de la tarea.        */
-        3,                      /* Prioridad de la tarea.         */
-        &HiloPlayerMov,                 /* Seguimiento de la tarea.       */
-        NUCLEO_PRINCIPAL        /* Número de núcleo.              */
-      );
+        vTaskSuspend(NULL);
+        break;
+      
+      case IN_GAME:
+        vTaskResume(HiloPlayerMov);
+        vTaskResume(HiloObstaculo2);
+        vTaskResume(HiloObstaculo1);
+        vTaskResume(HiloPausa);
+        break;
 
-      startGame = false;
-      vTaskSuspend(NULL);
+      case MAIN_MENU:
+        vTaskDelete(HiloPlayerMov);
+        vTaskDelete(HiloObstaculo2);
+        vTaskDelete(HiloObstaculo1);
+        vTaskDelete(HiloPausa);
+        break;
+      
+      default:
+        break;
+
     }
+
 
     vTaskDelay(100 / portTICK_PERIOD_MS);
   }
@@ -99,7 +99,7 @@ void ParallelTask :: obstacle2Task ( void * pvParameters ) {
   int8_t counter = 3;
   for(;;){
 
-    lcdDisplay.moveObstacle(obstacle2, 2);
+    display.moveObstacle(obstacle2, 2);
     obstacle2[0] = 15;
     obstacle2[1] = 1;
 
@@ -138,16 +138,24 @@ void ParallelTask :: playerMov(void *pvParameters) {
 void ParallelTask :: checkingPause( void *pvParameters){
 
   //if isButtonPressed
-  vTaskSuspend(HiloPlayerMov);
-  vTaskSuspend(HiloObstaculo2);
-  vtaskSuspend(HiloObstaculo1);
-  //Suspender cancion y demas tasks
-  //activa o resume task menu in-game
-  vtaskSuspend(NULL);
+  if(menuHandler.isButtonPressed())
+  {
+    vTaskSuspend(HiloPlayerMov);
+    vTaskSuspend(HiloObstaculo2);
+    vTaskSuspend(HiloObstaculo1);
+    //Suspender cancion y demas tasks
+    //activa o resume task menu in-game
+    xTaskCreatePinnedToCore(
+      ParallelTask::menuTask, // Función de la tarea
+      "MenuTask",              // Nombre de la tarea
+      10000,                   // Stack size
+      NULL,                    // Parámetros de la tarea
+      1,                       // Prioridad
+      &HiloMenu,               // Handle de la tarea
+      NUCLEO_PRINCIPAL        // Núcleo 1
+    );                      
+    vTaskSuspend(NULL);
+  }
 
-  vtaskResume()
 }
 
-void ParallelTask :: createGameTasks( void *pvParameters){
-  
-}

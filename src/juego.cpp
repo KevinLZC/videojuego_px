@@ -53,7 +53,7 @@ void Juego :: movimiento()
 void Juego :: movePoint(int newX, int newY) 
 {
   // Borrar el punto anterior
-  lcdDisplay.print(32,player[0],player[1]);
+  display.print(32,player[0],player[1]);
 
   // Actualizar las coordenadas
   player[0] = newX;
@@ -61,7 +61,7 @@ void Juego :: movePoint(int newX, int newY)
 
   // Dibujar el nuevo punto
   
-  lcdDisplay.print(1,player[0],player[1]);
+  display.print(1,player[0],player[1]);
 
   // Mostrar en el monitor serial
   Serial.print("X Pos: ");
@@ -85,4 +85,8 @@ bool Juego :: hasCrashed(){
   }
 
   return returnVal;
+}
+
+void Juego :: startPlayer(){
+  display.print(5,player[0],player[1]);
 }
