@@ -73,7 +73,6 @@ byte obstacle[8] = {
         B11111
 };
 
-<<<<<<< HEAD
 byte playerByte[8] = {
       B00100,
       B00100,
@@ -85,8 +84,6 @@ byte playerByte[8] = {
       B01110
 };
 
-=======
->>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
 /**
  * @brief Estado actual del juego.
  */
@@ -116,7 +113,6 @@ const char *menuItems[] = {"Jugar", "Puntajes Altos", "Salir"};
 const char *inGameItems[] = {"Reanudar", "Salir"};
 const char *gameOverItems[] = {"Jugar de nuevo", "Salir"};
 
-<<<<<<< HEAD
 
 void LCDHandler :: print(int posicionChar, uint8_t columna, bool fila)
 {
@@ -124,8 +120,6 @@ void LCDHandler :: print(int posicionChar, uint8_t columna, bool fila)
   lcd.write( posicionChar );
 }
 
-=======
->>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
 /**
  * @brief Inicializa la pantalla LCD.
  *
@@ -158,7 +152,6 @@ void LCDHandler::lcd_set_cursor(int column, int row)
   lcd.setCursor(column, row);
 }
 
-<<<<<<< HEAD
 void LCDHandler::createCharacters()
 {
   lcd.createChar(0, topLeft);
@@ -169,8 +162,6 @@ void LCDHandler::createCharacters()
   lcd.createChar(5, playerByte);
 }
 
-=======
->>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
 /**
  * @brief Muestra la pantalla de bienvenida.
  *
@@ -269,6 +260,7 @@ void LCDHandler::showInGameMenu(int index)
  */
 void LCDHandler::showGameOverMenu(int index)
 {
+  microSD.saveScore(score);
   lcd_clear_display();
   for (int i = 0; i < gameOverMenuItems; i++)
   {
@@ -350,7 +342,6 @@ void LCDHandler::displayPlayerName(char *playerName)
   lcd.print("Nombre: ");
   lcd.setCursor(0, 1);
   lcd.print(playerName);
-<<<<<<< HEAD
 }
 
 void LCDHandler :: moveObstacle( int8_t obstacle[2], uint8_t obstacleType )
@@ -376,6 +367,4 @@ void LCDHandler :: moveObstacle( int8_t obstacle[2], uint8_t obstacleType )
     lcd.setCursor(obstacle[0], obstacle[1]);
     lcd.print(" ");
   }
-=======
->>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
 }

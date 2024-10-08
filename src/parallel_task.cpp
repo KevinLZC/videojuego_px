@@ -54,7 +54,6 @@ void ParallelTask::menuTask(void *pvParameters)
   {
   menuHandler.handleMenuNavigation();
 
-<<<<<<< HEAD
     switch(currentState)
     {
       case IN_GAME_MENU:
@@ -117,26 +116,13 @@ void ParallelTask::menuTask(void *pvParameters)
       default:
         break;
 
-=======
-    // Código comentado para crear tareas adicionales si el juego comienza
-    /*
-    if(startGame)
-    {
-      xTaskCreatePinnedToCore(obstacle1Task, "obstacle1Mov", 2500, NULL, 1, &HiloObstaculo1, NUCLEO_PRINCIPAL);
-      xTaskCreatePinnedToCore(obstacle2Task, "obstacle2Mov", 2500, NULL, 1, &HiloObstaculo2, NUCLEO_PRINCIPAL);
-      xTaskCreatePinnedToCore(playerMov, "playerMov", 4000, NULL, 3, &HiloPlayerMov, NUCLEO_PRINCIPAL);
-      startGame = false;
-      vTaskSuspend(NULL);
->>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
     }
-    */
 
 
     vTaskDelay(100 / portTICK_PERIOD_MS);
   }
 }
 
-<<<<<<< HEAD
 
 void ParallelTask :: obstacle2Task ( void * pvParameters ) {
 
@@ -154,19 +140,12 @@ void ParallelTask :: obstacle2Task ( void * pvParameters ) {
   }
   Serial.println("Delete and create");
   vTaskDelete(NULL);
-=======
-// Implementación futura de otras tareas relacionadas con el videojuego
-/*
-void ParallelTask::obstacle1Task(void *pvParameters) {
-  // Lógica para el movimiento del obstáculo 1
->>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
 }
 
 void ParallelTask::obstacle2Task(void *pvParameters) {
   // Lógica para el movimiento del obstáculo 2
 }
 
-<<<<<<< HEAD
 void ParallelTask :: checkingPause( void *pvParameters){
 
   //if isButtonPressed
@@ -191,17 +170,3 @@ void ParallelTask :: checkingPause( void *pvParameters){
 
 }
 
-=======
-void ParallelTask::playerMov(void *pvParameters) {
-  // Lógica para el movimiento del jugador
-}
-
-void ParallelTask::checkingPause(void *pvParameters) {
-  // Lógica para pausar el juego
-}
-
-void ParallelTask::createGameTasks(void *pvParameters) {
-  // Lógica para crear nuevas tareas relacionadas con el juego
-}
-*/
->>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b

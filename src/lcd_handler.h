@@ -5,10 +5,6 @@
  * Este archivo contiene la definición de la clase LCDHandler, que gestiona la pantalla LCD para mostrar diferentes
  * estados del videojuego como el menú principal, el juego en curso y la pantalla de Game Over.
  */
-<<<<<<< HEAD
-=======
-
->>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
 #ifndef LCD_HANDLER_H
 #define LCD_HANDLER_H
 
@@ -20,17 +16,17 @@
  */
 extern MicroSD microSD;
 
-#define VALOR_INICIAL 2048 ///< Valor inicial para control de lectura del joystick.
-#define VALOR_TOPE 4095    ///< Valor tope de lectura del joystick.
-#define PWM_MIN 0          ///< Valor mínimo para la señal PWM.
-#define PWM_MAX 255        ///< Valor máximo para la señal PWM.
+#define VALOR_INICIAL 2048
+#define VALOR_TOPE 4095
+#define PWM_MIN 0
+#define PWM_MAX 255
 
-#define INCREMENTO(a) (a > VALOR_INICIAL + 200 ? 1 : 0) ///< Macro para verificar incremento en joystick.
-#define DECREMENTO(a) (a < VALOR_INICIAL - 200 ? 1 : 0) ///< Macro para verificar decremento en joystick.
+#define INCREMENTO(a) (a > VALOR_INICIAL + 200 ? 1 : 0)
+#define DECREMENTO(a) (a < VALOR_INICIAL - 200 ? 1 : 0)
 
-#define PIN_X 34      ///< Pin para el eje X del joystick.
-#define PIN_Y 35      ///< Pin para el eje Y del joystick.
-#define PIN_BUTTON 32 ///< Pin para el botón del joystick.
+#define PIN_X 34
+#define PIN_Y 35
+#define PIN_BUTTON 32
 
 /**
  * @enum State
@@ -69,10 +65,6 @@ extern int mainMenuIndex, inGameMenuIndex, gameOverMenuIndex;
  * @brief Número de elementos en los menús.
  */
 extern const int mainMenuItems, inGameMenuItems, gameOverMenuItems;
-<<<<<<< HEAD
-=======
-
->>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
 /**
  * @brief Ítems de texto para los menús.
  */
@@ -100,11 +92,7 @@ public:
    */
   void lcd_init_display();
 
-<<<<<<< HEAD
     /**
-=======
-  /**
->>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
    * @brief Limpia la pantalla LCD.
    *
    * Borra el contenido actual de la pantalla.
@@ -118,12 +106,8 @@ public:
    * @param row Fila en la que se ubicará el cursor.
    */
   void lcd_set_cursor(int column, int row);
-<<<<<<< HEAD
   
   void createCharacters(void);
-=======
-
->>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
   /**
    * @brief Muestra la pantalla de bienvenida.
    *
@@ -157,11 +141,7 @@ public:
    * @param index Índice del ítem seleccionado en el menú.
    */
   void showGameOverMenu(int index);
-<<<<<<< HEAD
   
-=======
-
->>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
   /**
    * @brief Muestra los puntajes más altos.
    *
@@ -187,11 +167,8 @@ public:
    * @param score Puntuación del jugador.
    */
   void saveValue(char *playerName, int score);
-<<<<<<< HEAD
   void print(int, uint8_t, bool);
   void moveObstacle(int8_t[2], uint8_t);
-=======
->>>>>>> 4452679eb9b58807d3a09c05d7a047e51d994a0b
 };
 
-#endif // LCD_HANDLER_H
+#endif
