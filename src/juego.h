@@ -12,11 +12,16 @@
 
 extern LCDHandler display;
 
+int8_t obstacle1[2] = {0,0};
+int8_t obstacle2[2] = {15,1};
+int8_t player[2] = {7,0};
+
 class Juego{
     
     public:
         void movimiento( void );
         bool hasCrashed( void );
+        void startPlayer( void );
 
     private:
         int lastXValue = 2048;  // Valor inicial centrado
